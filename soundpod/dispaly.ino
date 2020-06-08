@@ -1,6 +1,5 @@
 void settings()
 {
-  
    sideMenu();
    topMenu();
    u8g2.setFont(u8g2_font_glasstown_nbp_tf);
@@ -75,6 +74,12 @@ void topMenu()
     
     if(volume < 10)
     u8g2.drawGlyph(119,9,81);
+//
+//    u8g2.setFont(u8g2_font_glasstown_nbp_tf);
+//    u8g2.setCursor(25,9);
+//    u8g2.print(batteryLevel);
+//    u8g2.setCursor(35,9);
+//    u8g2.print("%");
 }
 
 void sideMenu()
