@@ -34,7 +34,7 @@ It also output's a 000.txt file, where all the original file names under each fo
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/Neutrino-1/Arduino-Soundpod/blob/master/LICENSE) file for details
 
 ## Acknowledgments
 
