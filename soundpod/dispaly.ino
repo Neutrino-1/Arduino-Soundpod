@@ -84,7 +84,8 @@ void topMenu()
 
 void sideMenu()
 {
-    uint16_t menuList[3][2] = {{77,u8g2_font_open_iconic_play_2x_t},{64,u8g2_font_open_iconic_mime_2x_t},};
+   const uint8_t menuListGlpy[2] = {77,64};
+   const uint8_t *menuList[2] = {u8g2_font_open_iconic_play_2x_t,u8g2_font_open_iconic_mime_2x_t};
 
     u8g2.setFontMode(0);
 
@@ -96,7 +97,7 @@ void sideMenu()
     }
 
     //Audio player
-    drawIcon(menuList[0][1],2,30,menuList[0][0]);
+    drawIcon(menuList[0],2,30,menuListGlpy[0]);
     
     u8g2.setDrawColor(1);
 
@@ -107,7 +108,9 @@ void sideMenu()
     u8g2.setDrawColor(0);
     }
     //About
-    drawIcon(menuList[1][1],2,52,menuList[1][0]);
+    drawIcon(menuList[1],2,52,menuListGlpy[1]);
+//    u8g2.setFont(menuList[1][1]);
+//    u8g2.drawGlyph(2,52,menuList[1][0]);
     
     u8g2.setDrawColor(1);
     u8g2.drawLine(22,0,22,68);   
