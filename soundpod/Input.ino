@@ -1,10 +1,6 @@
-void leftButtonISR()
+void preivousButtonClicked()
 {
- static unsigned long last_interrupt_time = 0;
- unsigned long interrupt_time = millis();
- // If interrupts come faster than 150ms, assume it's a bounce and ignore
- if (interrupt_time - last_interrupt_time > 150)
- {
+
   updateScreen = true;  
   if(inSideMenuSelection && sMenuSelection < 2)
   {
@@ -22,17 +18,11 @@ void leftButtonISR()
   {
      eq++; 
   }
- }
- last_interrupt_time = interrupt_time;
+
 }
 
-void rightButtonISR()
+void nextButtonClicked()
 {
- static unsigned long last_interrupt_time = 0;
- unsigned long interrupt_time = millis();
- // If interrupts come faster than 150, assume it's a bounce and ignore
- if (interrupt_time - last_interrupt_time > 150)
- {
   updateScreen = true;  
   if(inSideMenuSelection && sMenuSelection > 1)
   {
@@ -50,6 +40,83 @@ void rightButtonISR()
   {
      eq--; 
   }
- }
- last_interrupt_time = interrupt_time;
+}
+
+void playButtonClicked()
+{
+  //Selection button
+  if(inSideMenuSelection)
+  {
+      inSideMenuSelection = false;
+      updateScreen = true;
+      delay(100);
+  }
+  else if(!inSideMenuSelection && sMenuSelection == 1)
+  {
+       if(selection == 1)
+       {
+        if(file > 1)
+        {
+         //previous audio
+         myDFPlayer.previous();
+         file--;
+         if(!playing)
+            playing = true;
+         EEPROM.write(2, file);
+        }
+       }
+       else if(selection == 2)
+       {
+         //pause / play
+         if(playing)
+         {
+          myDFPlayer.pause();
+         }
+         else
+         {
+          myDFPlayer.start();
+         }
+         playing = !playing;
+       }
+       else if(selection == 3)
+       {
+          //next audio
+          file++;
+            myDFPlayer.next(); 
+           if(!playing)
+            playing = true;
+            EEPROM.write(2, file);
+       }
+       else if(selection == 4)
+       {
+         //back to side menu
+         selection = 1;
+         inSideMenuSelection = true;
+       }
+       updateScreen = true;
+       delay(200);
+  }else if(!inSideMenuSelection && sMenuSelection == 2)
+  {
+     if(selection == 1)
+     {
+         selection = 2;
+         myDFPlayer.volume(volume);
+         EEPROM.write(0, volume);
+     }
+     else if(selection == 2)
+     {
+        selection = 4;
+        myDFPlayer.EQ(eq);
+        EEPROM.write(1, eq);
+     }
+     else if(selection == 4)
+     {
+         //back to side menu
+         selection = 1;
+         inSideMenuSelection = true;
+     }
+     updateScreen = true;
+     delay(200);
+  }
+
 }
